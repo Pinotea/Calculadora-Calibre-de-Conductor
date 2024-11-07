@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Calibre de Conductor para Circuito Derivado</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .bg-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .input {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .button {
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: rgba(59, 130, 246, 0.8);
+        }
+
+        input[type="number"] {
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        input[type="number"]::placeholder {
+            color: #666;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient text-white py-8">
+    <div class="container mx-auto px-4">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                CONSULTORIA EN INGENIERIA Y EFICIENCIA ENERGETICA
+            </h1>
+            <div class="flex justify-center items-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Fotografia%20Minor-4051DQMxdMZeQa4dPSd6soUkfPNPag.png" alt="Consultor de Ingeniería" class="w-20 h-20 rounded-full object-cover">
+            </div>
+        </header>
+
+        <div class="w-full max-w-2xl mx-auto">
+            <div class="card rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-white">Cálculo de Calibre de Conductor para Circuito Derivado</h2>
+                <p class="text-gray-200 mb-6 text-center">Ingrese los datos del circuito y presione el botón Calcular para obtener los resultados.</p>
+                <form id="calculadoraForm" class="space-y-4">
+                    <div>
+                        <label for="voltaje" class="block text-sm font-medium text-gray-200">Voltaje de alimentación (V)</label>
+                        <input type="number" id="voltaje" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="potencia" class="block text-sm font-medium text-gray-200">Potencia conectada (W)</label>
+                        <input type="number" id="potencia" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="previsionFutura" class="block text-sm font-medium text-gray-200">Previsión futura (%)</label>
+                        <input type="number" id="previsionFutura" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="factorTemperatura" class="block text-sm font-medium text-gray-200">Factor de corrección por temperatura (%)</label>
+                        <input type="number" id="factorTemperatura" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="factorConductores" class="block text-sm font-medium text-gray-200">Factor de corrección por cantidad de conductores (%)</label>
+                        <input type="number" id="factorConductores" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="factorSeguridad" class="block text-sm font-medium text-gray-200">Factor de seguridad (%)</label>
+                        <input type="number" id="factorSeguridad" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="factorPotencia" class="block text-sm font-medium text-gray-200">Factor de potencia (%)</label>
+                        <input type="number" id="factorPotencia" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="distancia" class="block text-sm font-medium text-gray-200">Distancia del circuito (m)</label>
+                        <input type="number" id="distancia" required class="mt-1 block w-full px-3 py-2 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="button" id="calcular" class="flex-1 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Calcular
+                        </button>
+                        <button type="button" id="reiniciar" class="flex-1 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Reiniciar
+                        </button>
+                    </div>
+                </form>
+                <div id="resultado" class="mt-6 p-4 bg-white/10 rounded-md hidden">
+                    <!-- Los resultados se insertarán aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const conductorData = [
+            { calibre: "14", seccion: 2.08, diametro: 1.63, capacidadCorriente: 15 },
+            { calibre: "12", seccion: 3.31, diametro: 2.05, capacidadCorriente: 20 },
+            { calibre: "10", seccion: 5.26, diametro: 2.59, capacidadCorriente: 30 },
+            { calibre: "8", seccion: 8.37, diametro: 3.26, capacidadCorriente: 40 },
+            { calibre: "6", seccion: 13.3, diametro: 4.11, capacidadCorriente: 55 },
+            { calibre: "4", seccion: 21.2, diametro: 5.19, capacidadCorriente: 70 },
+            { calibre: "2", seccion: 33.6, diametro: 6.54, capacidadCorriente: 95 },
+            { calibre: "1/0", seccion: 53.5, diametro: 8.25, capacidadCorriente: 125 },
+            { calibre: "2/0", seccion: 67.4, diametro: 9.27, capacidadCorriente: 145 },
+            { calibre: "3/0", seccion: 85.0, diametro: 10.4, capacidadCorriente: 165 },
+            { calibre: "4/0", seccion: 107, diametro: 11.7, capacidadCorriente: 195 },
+        ];
+
+        document.getElementById('calcular').addEventListener('click', function() {
+            const voltaje = parseFloat(document.getElementById('voltaje').value);
+            const potencia = parseFloat(document.getElementById('potencia').value);
+            const previsionFutura = parseFloat(document.getElementById('previsionFutura').value);
+            const factorTemperatura = parseFloat(document.getElementById('factorTemperatura').value);
+            const factorConductores = parseFloat(document.getElementById('factorConductores').value);
+            const factorSeguridad = parseFloat(document.getElementById('factorSeguridad').value);
+            const factorPotencia = parseFloat(document.getElementById('factorPotencia').value);
+            const distancia = parseFloat(document.getElementById('distancia').value);
+
+            try {
+                // Cálculo paso a paso
+                let I = potencia / voltaje; // Amperaje inicial
+                I *= (1 + previsionFutura / 100); // Aplicar previsión futura
+                I *= (1 + factorTemperatura / 100); // Aplicar factor de temperatura
+                I *= (1 + factorConductores / 100); // Aplicar factor de conductores
+                I *= (1 + factorSeguridad / 100); // Aplicar factor de seguridad
+                I /= (factorPotencia / 100); // Aplicar factor de potencia
+
+                // Función para calcular la caída de tensión
+                const calcularCaidaTension = (calibre) => {
+                    const resistividad = 0.0172; // Ω·mm²/m para el cobre
+                    const caidaTension = (2 * resistividad * distancia * I) / calibre.seccion;
+                    const porcentajeCaida = (caidaTension / voltaje) * 100;
+                    return { caidaTension, porcentajeCaida };
+                };
+
+                let calibreSeleccionado;
+                let caidaTension;
+                let porcentajeCaida;
+
+                // Seleccionar el calibre inicial y calcular la caída de tensión
+                for (let i = 0; i < conductorData.length; i++) {
+                    if (conductorData[i].capacidadCorriente >= I) {
+                        calibreSeleccionado = conductorData[i];
+                        ({ caidaTension, porcentajeCaida } = calcularCaidaTension(calibreSeleccionado));
+                        break;
+                    }
+                }
+
+                // Si no se encontró un calibre adecuado, usar el más grande disponible
+                if (!calibreSeleccionado) {
+                    calibreSeleccionado = conductorData[conductorData.length - 1];
+                    ({ caidaTension, porcentajeCaida } = calcularCaidaTension(calibreSeleccionado));
+                }
+
+                // Verificar si la caída de tensión es mayor al 3% y seleccionar el siguiente calibre si es necesario
+                let calibreIndex = conductorData.findIndex(c => c.calibre === calibreSeleccionado.calibre);
+                while (porcentajeCaida > 3 && calibreIndex < conductorData.length - 1) {
+                    calibreIndex++;
+                    calibreSeleccionado = conductorData[calibreIndex];
+                    ({ caidaTension, porcentajeCaida } = calcularCaidaTension(calibreSeleccionado));
+                }
+
+                const resultadoHTML = `
+                    <h3 class="text-lg font-semibold mb-2 text-white">Resultados:</h3>
+                    <p class="text-gray-200">Corriente calculada: ${I.toFixed(2)} A</p>
+                    <p class="text-gray-200">Calibre recomendado: ${calibreSeleccionado.calibre} AWG</p>
+                    <p class="text-gray-200">Sección: ${calibreSeleccionado.seccion.toFixed(2)} mm²</p>
+                    <p class="text-gray-200">Diámetro: ${calibreSeleccionado.diametro.toFixed(2)} mm</p>
+                    <p class="text-gray-200">Caída de tensión: ${caidaTension.toFixed(2)} V</p>
+                    <p class="text-gray-200">Porcentaje de caída: ${porcentajeCaida.toFixed(2)}%</p>
+                `;
+
+                document.getElementById('resultado').innerHTML = resultadoHTML;
+                document.getElementById('resultado').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error al calcular el calibre del conductor:", error);
+                document.getElementById('resultado').innerHTML = '<p class="text-red-400">Error: ' + error.message + '</p>';
+                document.getElementById('resultado').classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('reiniciar').addEventListener('click', function() {
+            document.getElementById('calculadoraForm').reset();
+            document.getElementById('resultado').innerHTML = '';
+            document.getElementById('resultado').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
